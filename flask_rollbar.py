@@ -20,7 +20,14 @@ logger = logging.getLogger('Flask-Rollbar')
 
 class RollbarRequestMixin(object):
     """
-    https://github.com/rollbar/rollbar-flask-example
+    To set up Person Tracking, implement a custom `request_class` that has a
+    `rollbar_person` property. If you already have a custom request class,
+    just add the `rollbar_person` property method to it.
+
+    `return {'id': '123', 'username': 'test', 'email': 'test@example.com'}`
+
+    The `id` is required, `username` and `email` are indexed but optional. All
+    values are strings.
     """
 
     __metaclass__ = abc.ABCMeta
@@ -60,7 +67,7 @@ class Rollbar(object):
         if environment is None:
             logger.warning('ROLLBAR_ENVIRONMENT not set')
 
-        def _data_hook(request, data):
+        def data_hook(request, data):
             # https://rollbar.com/docs/api/items_post
             data['platform'] = sys.platform
             data['language'] = 'python'
@@ -68,7 +75,7 @@ class Rollbar(object):
             if request:
                 data['context'] = str(request.url_rule)
 
-        rollbar.BASE_DATA_HOOK = _data_hook
+        rollbar.BASE_DATA_HOOK = data_hook
 
         rollbar.init(
             access_token,
