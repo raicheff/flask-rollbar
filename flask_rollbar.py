@@ -54,7 +54,7 @@ class Rollbar(object):
         access_token = app.config.get('ROLLBAR_SERVER_TOKEN')
         environment = app.config.get('ROLLBAR_ENVIRONMENT')
 
-        def _hook(request, data):
+        def _data_hook(request, data):
             # https://rollbar.com/docs/api/items_post
             data['platform'] = sys.platform
             data['language'] = 'python'
@@ -62,7 +62,7 @@ class Rollbar(object):
             if request:
                 data['context'] = str(request.url_rule)
 
-        rollbar.BASE_DATA_HOOK = _hook
+        rollbar.BASE_DATA_HOOK = _data_hook
 
         rollbar.init(
             access_token,
