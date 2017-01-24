@@ -7,6 +7,7 @@
 
 
 import abc
+import sys
 
 import rollbar
 import rollbar.contrib.flask
@@ -55,7 +56,7 @@ class Rollbar(object):
 
         def _hook(request, data):
             # https://rollbar.com/docs/api/items_post
-            # data['platform'] = 'linux'
+            data['platform'] = sys.platform
             data['language'] = 'python'
             data['framework'] = 'flask'
             if request:
