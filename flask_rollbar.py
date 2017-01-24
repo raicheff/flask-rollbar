@@ -7,6 +7,7 @@
 
 
 import abc
+import logging
 import sys
 
 import flask
@@ -15,6 +16,9 @@ import rollbar.contrib.flask
 
 
 __version__ = '0.1.0'
+
+
+logger = logging.getLogger('Flask-Rollbar')
 
 
 class RollbarRequestMixin(object):
@@ -51,7 +55,13 @@ class Rollbar(object):
             return
 
         access_token = app.config.get('ROLLBAR_SERVER_TOKEN')
+        if access_token is None:
+            logger.warning('ROLLBAR_SERVER_TOKEN not set')
+            return
+
         environment = app.config.get('ROLLBAR_ENVIRONMENT')
+        if environment is None:
+            logger.warning('ROLLBAR_ENVIRONMENT not set')
 
         def _data_hook(request, data):
             # https://rollbar.com/docs/api/items_post
