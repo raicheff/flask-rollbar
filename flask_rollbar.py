@@ -9,10 +9,9 @@
 import abc
 import sys
 
+import flask
 import rollbar
 import rollbar.contrib.flask
-
-from flask import got_request_exception
 
 
 __version__ = '0.1.0'
@@ -72,7 +71,7 @@ class Rollbar(object):
             **kwargs
         )
 
-        got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
+        flask.got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
 
     def __getattr__(self, name):
         return getattr(rollbar, name)
