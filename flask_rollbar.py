@@ -15,9 +15,6 @@ import rollbar
 import rollbar.contrib.flask
 
 
-__version__ = '0.1.0'
-
-
 logger = logging.getLogger('Flask-Rollbar')
 
 

@@ -8,12 +8,10 @@
 
 from setuptools import setup
 
-from flask_rollbar import __version__
-
 
 setup(
     name='Flask-Rollbar',
-    version=__version__,
+    version='0.1.0',
     description='Flask-Rollbar',
     author='Boris Raicheff',
     author_email='b@raicheff.com',
