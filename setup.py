@@ -8,7 +8,7 @@
 
 from setuptools import setup
 
-from .flask_rollbar import __version__
+from flask_rollbar import __version__
 
 
 setup(
